@@ -35,6 +35,7 @@ urlpatterns = [
     path('blog/<pk>',views.SingleBlog.as_view(),name='single-blog'),
     path('blog-detail/<pk>',views.SingleBlogDetail.as_view(),name='single-blog-detail'),
     path('create-blog',views.CreateBlog.as_view(),name='create-blog'),
+    path('list-blog',views.ListBlog.as_view(),name='list-blog'),
 
     # For Blogging related links
     path('blog-section/<pk>',views.SingleBlogSection.as_view(),name='blog-section'),

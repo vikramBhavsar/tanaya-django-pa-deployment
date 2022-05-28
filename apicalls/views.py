@@ -167,6 +167,11 @@ class CreateBlog(generics.ListAPIView, mixins.CreateModelMixin):
         return self.create(request,*args,**kwargs)
 
 
+class ListBlog(generics.ListAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+
+
 #### FOR sections inside blog
 class SingleBlogSection(generics.ListAPIView,mixins.RetrieveModelMixin,mixins.UpdateModelMixin,mixins.DestroyModelMixin):
     queryset = BlogSection.objects.all()

@@ -66,7 +66,7 @@ MIDDLEWARE = [
 
 
 # CORS policy - allowing only certain links
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=lambda v: [s.strip() for s in v.split(',')])
 
 ROOT_URLCONF = 'tanaya_portfolio.urls'

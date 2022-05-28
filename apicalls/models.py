@@ -6,7 +6,26 @@ import os
 import sys
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from io import BytesIO
-from PIL import Image
+from PIL import Image,ExifTags
+
+
+def rotateImageIfRequired(img):
+
+    ## special code for checking orientation and rotation
+    for orientation in ExifTags.Tags.keys():
+        if ExifTags.TAGS[orientation] == 'Orientation':
+            break
+    
+    exif = dict(im._getexif().items())
+    if exif[orientation] == 3:
+        im = im.rotate(180, expand=True)
+    elif exif[orientation] == 6:
+        im = im.rotate(270, expand=True)
+    elif exif[orientation] == 8:
+        im = im.rotate(90, expand=True)
+    ## END OF special code for checking orientation and rotation
+
+    return img
 
 
 # Create your models here.
@@ -46,6 +65,8 @@ class MediaContent(models.Model):
 
             try:
                 im = Image.open(self.mediaFile)
+
+                im = rotateImageIfRequired(im)
 
                 output = BytesIO()
 
@@ -109,6 +130,9 @@ class ArtMediaContent(models.Model):
 
             try:
                 im = Image.open(self.mediaFile)
+
+                # rotate image if required
+                im = rotateImageIfRequired(im)
 
                 output = BytesIO()
 
@@ -178,6 +202,9 @@ class BlogSection(models.Model):
             try:
                 im = Image.open(self.mediaURL)
 
+                # rotating image if required
+                im = rotateImageIfRequired(im)
+
                 output = BytesIO()
 
                 # Resize/modify the image
@@ -229,6 +256,8 @@ class MediaGroupSection(models.Model):
             try:
                 im = Image.open(self.mediaURL)
 
+                # rotating image if required
+                im = rotateImageIfRequired(im)
                 output = BytesIO()
 
                 # Resize/modify the image
@@ -277,6 +306,8 @@ class About(models.Model):
             try:
                 im = Image.open(self.mediaFile)
 
+                #rotating image if required
+                im = rotateImageIfRequired(im)
                 output = BytesIO()
 
                 # Resize/modify the image
