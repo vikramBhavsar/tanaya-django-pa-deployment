@@ -294,6 +294,7 @@ class About(models.Model):
     about_heading = models.CharField(max_length=200,blank=True)
     about_content =  models.TextField(max_length=1000,blank=True)
     mediaFile = models.ImageField(upload_to=update_about_filename,blank=True)
+    videoLink = models.CharField(max_length=1000,blank=True,default="")
 
     def __str__(self) -> str:
         return str(self.pk) + ' ' + self.about_heading
